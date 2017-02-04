@@ -1,0 +1,163 @@
+---
+title: "Term_Project:Kaggle競賽"
+author: "JerryFu"
+date: "2017年2月4日"
+output: html_document
+---
+
+項次|主題|摘要
+---|---|---
+1|上傳預測結果|如附圖
+2|處理Titanic資料|2.1:處理遺漏值(使用MICE的CART方法)
+-|-|2.2:建立並訓練分類模型
+3|預測資料|3.1:下載要預測的資料
+-|-|3.2:檢視資料是否有遺漏
+-|-|3.3:填補各項遺漏值
+-|-|3.4:使用2.2之模型進行預測並上傳
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#要安裝diagram套件install.packages("diagram")
+library(shape)
+library(diagram)
+```
+##1.上傳預測的結果
+![至kaggle上傳預測結果(csv檔案)](https://sailoruranus.github.io/r_prg_term_project/kaggle_01_MICE_CART.png)
+
+##2.處理Titanic資料
+###2.1:處理遺漏值(使用MICE的CART方法)
+-處理流程如圖
+
+```{r kaggle_flow, echo = FALSE}
+openplotmat()#宣告畫布
+pos <- coordinates(c(3,3,3,3))#宣告3X9格
+texthexa(pos[1,],radx=0.09,lab="開始\n載入資料")
+textrect(pos[6,],radx=0.08,lab="用MICE產\n生5份資料")
+textrect(pos[4,],radx=0.06,lab="檢視資料")
+textrect(pos[5,],radx=0.07,lab="任選一份\n回填Age")
+textdiamond(pos[7,],radx=0.065,lab="資料\n完整\n?")
+textrect(pos[8,],radx=0.08,lab="補齊2個\nEmborked")
+textrect(pos[9,],radx=0.08,lab="挑關聯欄位\nPclass,Age,Fare")
+textrect(pos[10,],radx=0.065,lab="建立/訓練\n分類器")
+textellipse(pos[11,],radx=0.06,lab="完成")
+
+#???接各??????
+straightarrow(from=pos[1,]-c(0,0.09),to=pos[4,]+c(0,0.06))
+straightarrow(from=pos[4,]-c(0,0.06),to=pos[7,]+c(0,0.11))
+straightarrow(from=pos[7,]-c(0,0.12),to=pos[10,]+c(0,0.065))
+straightarrow(from=pos[10,]-c(-0.065,0),to=pos[11,]+c(-0.065,0))
+straightarrow(from=pos[7,]-c(-0.065,0),to=pos[8,]+c(-0.08,0))
+straightarrow(from=pos[8,]-c(-0.08,0),to=pos[9,]+c(-0.08,0))
+straightarrow(from=pos[9,]-c(0,-0.08),to=pos[6,]+c(0,-0.08))
+straightarrow(from=pos[6,]-c(0.08,-0.02),to=pos[5,]+c(0.07,0.018))
+straightarrow(from=pos[5,]-c(0.07,-0.02),to=pos[4,]+c(0.06,0.018))
+```
+```{r Titnaic_MICE_CART_01, echo=FALSE}
+url = "https://storage.googleapis.com/2017_ithome_ironman/data/kaggle_titanic_train.csv"
+titanic <- read.csv(url)
+```
+
+```{r Titnaic_MICE_CART_02, warning = FALSE}
+#因為Emborked有兩個空白，所以就先把這兩個空白補成數量最多的S
+titanic$Survived <- factor(titanic$Survived)
+titanic$Embarked <- as.character(titanic$Embarked)
+titanic$Embarked[titanic$Embarked == ""] <- "S"
+titanic$Embarked <- factor(titanic$Embarked)
+
+#複製titanic到titanic_mice並移除較無關聯的欄位(移除性別欄位後準確度有提高)
+titanic_mice <- titanic
+titanic_mice <- titanic_mice[, -c(1,2,4,5,7,8,9,11,12)]
+
+#安裝mice套件
+#install.packages( "mice" )
+library(mice)
+#使用mice套件的cart方法填補遺漏值，產生5份填補資料，取第4份
+#(下行會顯示產生的5份全部資料，因量大所以先註解)
+#titanic_fill_cart <- mice(titanic_mice,m=5,maxit = 50, method = "cart", seed = 500)
+```
+
+```{r Titnaic_MICE_CART_03,include = FALSE, echo = FALSE}
+#使用mice套件的cart方法填補遺漏值，產生5份填補資料，取第4份
+titanic_fill_cart <- mice(titanic_mice,m=5,maxit = 50, method = "cart", seed = 500)
+```
+
+```{r Titnaic_MICE_CART_04, warning = FALSE}
+titanic_mice_cart <- complete(titanic_fill_cart,4)
+```
+
+```{r Titnaic_MICE_CART_05, warning = FALSE}
+#確認清洗後的資料View(titanic_mice_cart)
+
+#把遺失的Age補回，記得要向量化，否則在建立分類模型時會出錯
+titanic$Age <-c(titanic_mice_cart$Age)
+
+```
+
+###2.2:建立並訓練分類模型
+```{r Titnaic_MICE_CART_06, warning = FALSE}
+# 切分訓練與測試資料
+set.seed(87)
+n <- nrow(titanic)
+shuffled_titanic <- titanic[sample(n), ]
+train_indices <- 1:round(0.8 * n)
+train <- shuffled_titanic[train_indices, ]
+test_indices <- (round(0.8 * n) + 1):n
+test <- shuffled_titanic[test_indices, ]
+
+# 建立分類器
+library(randomForest)
+rf_clf <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data = train, ntree = 800)
+
+# 計算 accuracy
+prediction <- predict(rf_clf, test[, c("Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")])
+confusion_matrix <- table(test$Survived, prediction)
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+accuracy
+```
+
+##3.預測資料
+###3.1:下載要預測的資料
+```{r Titnaic_MICE_CART_07, warning = FALSE}
+#載入預測資料
+url <- "https://storage.googleapis.com/py_ds_basic/kaggle_titanic_test.csv"
+to_predict <- read.csv(url)
+```
+
+###3.2:檢視資料是否有遺漏
+```{r Titnaic_MICE_CART_07a, warning = FALSE}
+#age有86個NA,Fare有1個NA
+to_predict_mice <- to_predict#複製要預測的資料
+to_predict_mice <- to_predict_mice[, -c(1,3,4,6,7,8,10,11)]#移除不需要的欄位
+```
+
+###3.3:填補各項遺漏值
+依照2.1流程圖示再進行填補
+```{r Titnaic_MICE_CART_07b, warning = FALSE}
+#使用MICE的CART/PMM方法填補遺漏值
+#to_predict_fill <- mice(to_predict_mice,m=5,maxit = 50, method = "cart", seed = 500)
+```
+
+```{r Titnaic_MICE_CART_08,include = FALSE, echo = FALSE}
+#使用MICE的CART/PMM方法填補遺漏值
+to_predict_fill <- mice(to_predict_mice,m=5,maxit = 50, method = "cart", seed = 500)
+```
+
+```{r Titnaic_MICE_CART_09, warning = FALSE}
+to_predict_mice <- complete(to_predict_fill,4) #使用第4份資料
+```
+###3.4:使用2.2之模型進行預測並上傳
+```{r Titnaic_MICE_CART_10, warning = FALSE}
+#將補好的Age,Fare回填to_predict
+to_predict$Age <- to_predict_mice$Age
+to_predict$Fare <- to_predict_mice$Fare
+
+#輸入模型進行預測
+predicted <- predict(rf_clf, newdata = to_predict[, c("Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")])
+to_submit <- data.frame(to_predict[, "PassengerId"], predicted)
+names(to_submit) <- c("PassengerId", "Survived")
+
+#將預測結果輸出至csv檔
+write.csv(to_submit, file = "to_submit_cart.csv", row.names = FALSE)
+```
+
