@@ -1,48 +1,48 @@
 ---
-title: "Term_Project:KaggleÄvÁÉ"
+title: "Term_Project:Kaggleç«¶è³½"
 author: "JerryFu"
-date: "2017¦~2¤ë4¤é"
+date: "2017å¹´2æœˆ4æ—¥"
 output: html_document
 ---
 
-¶µ¦¸|¥DÃD|ºK­n
+é …æ¬¡|ä¸»é¡Œ|æ‘˜è¦
 ---|---|---
-1|¤W¶Ç¹w´úµ²ªG|¦pªş¹Ï
-2|³B²zTitanic¸ê®Æ|2.1:³B²z¿òº|­È(¨Ï¥ÎMICEªºCART¤èªk)
--|-|2.2:«Ø¥ß¨Ã°V½m¤ÀÃş¼Ò«¬
-3|¹w´ú¸ê®Æ|3.1:¤U¸ü­n¹w´úªº¸ê®Æ
--|-|3.2:ÀËµø¸ê®Æ¬O§_¦³¿òº|
--|-|3.3:¶ñ¸É¦U¶µ¿òº|­È
--|-|3.4:¨Ï¥Î2.2¤§¼Ò«¬¶i¦æ¹w´ú¨Ã¤W¶Ç
+1|ä¸Šå‚³é æ¸¬çµæœ|å¦‚é™„åœ–
+2|è™•ç†Titanicè³‡æ–™|2.1:è™•ç†éºæ¼å€¼(ä½¿ç”¨MICEçš„CARTæ–¹æ³•)
+-|-|2.2:å»ºç«‹ä¸¦è¨“ç·´åˆ†é¡æ¨¡å‹
+3|é æ¸¬è³‡æ–™|3.1:ä¸‹è¼‰è¦é æ¸¬çš„è³‡æ–™
+-|-|3.2:æª¢è¦–è³‡æ–™æ˜¯å¦æœ‰éºæ¼
+-|-|3.3:å¡«è£œå„é …éºæ¼å€¼
+-|-|3.4:ä½¿ç”¨2.2ä¹‹æ¨¡å‹é€²è¡Œé æ¸¬ä¸¦ä¸Šå‚³
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#­n¦w¸Ëdiagram®M¥óinstall.packages("diagram")
+#è¦å®‰è£diagramå¥—ä»¶install.packages("diagram")
 library(shape)
 library(diagram)
 ```
-##1.¤W¶Ç¹w´úªºµ²ªG
-![¦Ükaggle¤W¶Ç¹w´úµ²ªG(csvÀÉ®×)](https://sailoruranus.github.io/r_prg_term_project/kaggle_01_MICE_CART.png)
+##1.ä¸Šå‚³é æ¸¬çš„çµæœ
+![è‡³kaggleä¸Šå‚³é æ¸¬çµæœ(csvæª”æ¡ˆ)](https://sailoruranus.github.io/r_prg_term_project/kaggle_01_MICE_CART.png)
 
-##2.³B²zTitanic¸ê®Æ
-###2.1:³B²z¿òº|­È(¨Ï¥ÎMICEªºCART¤èªk)
--³B²z¬yµ{¦p¹Ï
+##2.è™•ç†Titanicè³‡æ–™
+###2.1:è™•ç†éºæ¼å€¼(ä½¿ç”¨MICEçš„CARTæ–¹æ³•)
+-è™•ç†æµç¨‹å¦‚åœ–
 
 ```{r kaggle_flow, echo = FALSE}
-openplotmat()#«Å§iµe¥¬
-pos <- coordinates(c(3,3,3,3))#«Å§i3X9®æ
-texthexa(pos[1,],radx=0.09,lab="¶}©l\n¸ü¤J¸ê®Æ")
-textrect(pos[6,],radx=0.08,lab="¥ÎMICE²£\n¥Í5¥÷¸ê®Æ")
-textrect(pos[4,],radx=0.06,lab="ÀËµø¸ê®Æ")
-textrect(pos[5,],radx=0.07,lab="¥ô¿ï¤@¥÷\n¦^¶ñAge")
-textdiamond(pos[7,],radx=0.065,lab="¸ê®Æ\n§¹¾ã\n?")
-textrect(pos[8,],radx=0.08,lab="¸É»ô2­Ó\nEmborked")
-textrect(pos[9,],radx=0.08,lab="¬DÃöÁpÄæ¦ì\nPclass,Age,Fare")
-textrect(pos[10,],radx=0.065,lab="«Ø¥ß/°V½m\n¤ÀÃş¾¹")
-textellipse(pos[11,],radx=0.06,lab="§¹¦¨")
+openplotmat()#å®£å‘Šç•«å¸ƒ
+pos <- coordinates(c(3,3,3,3))#å®£å‘Š3X9æ ¼
+texthexa(pos[1,],radx=0.09,lab="é–‹å§‹\nè¼‰å…¥è³‡æ–™")
+textrect(pos[6,],radx=0.08,lab="ç”¨MICEç”¢\nç”Ÿ5ä»½è³‡æ–™")
+textrect(pos[4,],radx=0.06,lab="æª¢è¦–è³‡æ–™")
+textrect(pos[5,],radx=0.07,lab="ä»»é¸ä¸€ä»½\nå›å¡«Age")
+textdiamond(pos[7,],radx=0.065,lab="è³‡æ–™\nå®Œæ•´\n?")
+textrect(pos[8,],radx=0.08,lab="è£œé½Š2å€‹\nEmborked")
+textrect(pos[9,],radx=0.08,lab="æŒ‘é—œè¯æ¬„ä½\nPclass,Age,Fare")
+textrect(pos[10,],radx=0.065,lab="å»ºç«‹/è¨“ç·´\nåˆ†é¡å™¨")
+textellipse(pos[11,],radx=0.06,lab="å®Œæˆ")
 
-#???±µ¦U??????
+#è¿æ¥å„é¡¶ç‚¹
 straightarrow(from=pos[1,]-c(0,0.09),to=pos[4,]+c(0,0.06))
 straightarrow(from=pos[4,]-c(0,0.06),to=pos[7,]+c(0,0.11))
 straightarrow(from=pos[7,]-c(0,0.12),to=pos[10,]+c(0,0.065))
@@ -59,26 +59,26 @@ titanic <- read.csv(url)
 ```
 
 ```{r Titnaic_MICE_CART_02, warning = FALSE}
-#¦]¬°Emborked¦³¨â­ÓªÅ¥Õ¡A©Ò¥H´N¥ı§â³o¨â­ÓªÅ¥Õ¸É¦¨¼Æ¶q³Ì¦hªºS
+#å› ç‚ºEmborkedæœ‰å…©å€‹ç©ºç™½ï¼Œæ‰€ä»¥å°±å…ˆæŠŠé€™å…©å€‹ç©ºç™½è£œæˆæ•¸é‡æœ€å¤šçš„S
 titanic$Survived <- factor(titanic$Survived)
 titanic$Embarked <- as.character(titanic$Embarked)
 titanic$Embarked[titanic$Embarked == ""] <- "S"
 titanic$Embarked <- factor(titanic$Embarked)
 
-#½Æ»stitanic¨ìtitanic_mice¨Ã²¾°£¸ûµLÃöÁpªºÄæ¦ì(²¾°£©Ê§OÄæ¦ì«á·Ç½T«×¦³´£°ª)
+#è¤‡è£½titanicåˆ°titanic_miceä¸¦ç§»é™¤è¼ƒç„¡é—œè¯çš„æ¬„ä½(ç§»é™¤æ€§åˆ¥æ¬„ä½å¾Œæº–ç¢ºåº¦æœ‰æé«˜)
 titanic_mice <- titanic
 titanic_mice <- titanic_mice[, -c(1,2,4,5,7,8,9,11,12)]
 
-#¦w¸Ëmice®M¥ó
+#å®‰è£miceå¥—ä»¶
 #install.packages( "mice" )
 library(mice)
-#¨Ï¥Îmice®M¥óªºcart¤èªk¶ñ¸É¿òº|­È¡A²£¥Í5¥÷¶ñ¸É¸ê®Æ¡A¨ú²Ä4¥÷
-#(¤U¦æ·|Åã¥Ü²£¥Íªº5¥÷¥ş³¡¸ê®Æ¡A¦]¶q¤j©Ò¥H¥ıµù¸Ñ)
+#ä½¿ç”¨miceå¥—ä»¶çš„cartæ–¹æ³•å¡«è£œéºæ¼å€¼ï¼Œç”¢ç”Ÿ5ä»½å¡«è£œè³‡æ–™ï¼Œå–ç¬¬4ä»½
+#(ä¸‹è¡Œæœƒé¡¯ç¤ºç”¢ç”Ÿçš„5ä»½å…¨éƒ¨è³‡æ–™ï¼Œå› é‡å¤§æ‰€ä»¥å…ˆè¨»è§£)
 #titanic_fill_cart <- mice(titanic_mice,m=5,maxit = 50, method = "cart", seed = 500)
 ```
 
 ```{r Titnaic_MICE_CART_03,include = FALSE, echo = FALSE}
-#¨Ï¥Îmice®M¥óªºcart¤èªk¶ñ¸É¿òº|­È¡A²£¥Í5¥÷¶ñ¸É¸ê®Æ¡A¨ú²Ä4¥÷
+#ä½¿ç”¨miceå¥—ä»¶çš„cartæ–¹æ³•å¡«è£œéºæ¼å€¼ï¼Œç”¢ç”Ÿ5ä»½å¡«è£œè³‡æ–™ï¼Œå–ç¬¬4ä»½
 titanic_fill_cart <- mice(titanic_mice,m=5,maxit = 50, method = "cart", seed = 500)
 ```
 
@@ -87,16 +87,16 @@ titanic_mice_cart <- complete(titanic_fill_cart,4)
 ```
 
 ```{r Titnaic_MICE_CART_05, warning = FALSE}
-#½T»{²M¬~«áªº¸ê®ÆView(titanic_mice_cart)
+#ç¢ºèªæ¸…æ´—å¾Œçš„è³‡æ–™View(titanic_mice_cart)
 
-#§â¿ò¥¢ªºAge¸É¦^¡A°O±o­n¦V¶q¤Æ¡A§_«h¦b«Ø¥ß¤ÀÃş¼Ò«¬®É·|¥X¿ù
+#æŠŠéºå¤±çš„Ageè£œå›ï¼Œè¨˜å¾—è¦å‘é‡åŒ–ï¼Œå¦å‰‡åœ¨å»ºç«‹åˆ†é¡æ¨¡å‹æ™‚æœƒå‡ºéŒ¯
 titanic$Age <-c(titanic_mice_cart$Age)
 
 ```
 
-###2.2:«Ø¥ß¨Ã°V½m¤ÀÃş¼Ò«¬
+###2.2:å»ºç«‹ä¸¦è¨“ç·´åˆ†é¡æ¨¡å‹
 ```{r Titnaic_MICE_CART_06, warning = FALSE}
-# ¤Á¤À°V½m»P´ú¸Õ¸ê®Æ
+# åˆ‡åˆ†è¨“ç·´èˆ‡æ¸¬è©¦è³‡æ–™
 set.seed(87)
 n <- nrow(titanic)
 shuffled_titanic <- titanic[sample(n), ]
@@ -105,59 +105,59 @@ train <- shuffled_titanic[train_indices, ]
 test_indices <- (round(0.8 * n) + 1):n
 test <- shuffled_titanic[test_indices, ]
 
-# «Ø¥ß¤ÀÃş¾¹
+# å»ºç«‹åˆ†é¡å™¨
 library(randomForest)
 rf_clf <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data = train, ntree = 800)
 
-# ­pºâ accuracy
+# è¨ˆç®— accuracy
 prediction <- predict(rf_clf, test[, c("Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")])
 confusion_matrix <- table(test$Survived, prediction)
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 accuracy
 ```
 
-##3.¹w´ú¸ê®Æ
-###3.1:¤U¸ü­n¹w´úªº¸ê®Æ
+##3.é æ¸¬è³‡æ–™
+###3.1:ä¸‹è¼‰è¦é æ¸¬çš„è³‡æ–™
 ```{r Titnaic_MICE_CART_07, warning = FALSE}
-#¸ü¤J¹w´ú¸ê®Æ
+#è¼‰å…¥é æ¸¬è³‡æ–™
 url <- "https://storage.googleapis.com/py_ds_basic/kaggle_titanic_test.csv"
 to_predict <- read.csv(url)
 ```
 
-###3.2:ÀËµø¸ê®Æ¬O§_¦³¿òº|
+###3.2:æª¢è¦–è³‡æ–™æ˜¯å¦æœ‰éºæ¼
 ```{r Titnaic_MICE_CART_07a, warning = FALSE}
-#age¦³86­ÓNA,Fare¦³1­ÓNA
-to_predict_mice <- to_predict#½Æ»s­n¹w´úªº¸ê®Æ
-to_predict_mice <- to_predict_mice[, -c(1,3,4,6,7,8,10,11)]#²¾°£¤£»İ­nªºÄæ¦ì
+#ageæœ‰86å€‹NA,Fareæœ‰1å€‹NA
+to_predict_mice <- to_predict#è¤‡è£½è¦é æ¸¬çš„è³‡æ–™
+to_predict_mice <- to_predict_mice[, -c(1,3,4,6,7,8,10,11)]#ç§»é™¤ä¸éœ€è¦çš„æ¬„ä½
 ```
 
-###3.3:¶ñ¸É¦U¶µ¿òº|­È
-¨Ì·Ó2.1¬yµ{¹Ï¥Ü¦A¶i¦æ¶ñ¸É
+###3.3:å¡«è£œå„é …éºæ¼å€¼
+ä¾ç…§2.1æµç¨‹åœ–ç¤ºå†é€²è¡Œå¡«è£œ
 ```{r Titnaic_MICE_CART_07b, warning = FALSE}
-#¨Ï¥ÎMICEªºCART/PMM¤èªk¶ñ¸É¿òº|­È
+#ä½¿ç”¨MICEçš„CART/PMMæ–¹æ³•å¡«è£œéºæ¼å€¼
 #to_predict_fill <- mice(to_predict_mice,m=5,maxit = 50, method = "cart", seed = 500)
 ```
 
 ```{r Titnaic_MICE_CART_08,include = FALSE, echo = FALSE}
-#¨Ï¥ÎMICEªºCART/PMM¤èªk¶ñ¸É¿òº|­È
+#ä½¿ç”¨MICEçš„CART/PMMæ–¹æ³•å¡«è£œéºæ¼å€¼
 to_predict_fill <- mice(to_predict_mice,m=5,maxit = 50, method = "cart", seed = 500)
 ```
 
 ```{r Titnaic_MICE_CART_09, warning = FALSE}
-to_predict_mice <- complete(to_predict_fill,4) #¨Ï¥Î²Ä4¥÷¸ê®Æ
+to_predict_mice <- complete(to_predict_fill,4) #ä½¿ç”¨ç¬¬4ä»½è³‡æ–™
 ```
-###3.4:¨Ï¥Î2.2¤§¼Ò«¬¶i¦æ¹w´ú¨Ã¤W¶Ç
+###3.4:ä½¿ç”¨2.2ä¹‹æ¨¡å‹é€²è¡Œé æ¸¬ä¸¦ä¸Šå‚³
 ```{r Titnaic_MICE_CART_10, warning = FALSE}
-#±N¸É¦nªºAge,Fare¦^¶ñto_predict
+#å°‡è£œå¥½çš„Age,Fareå›å¡«to_predict
 to_predict$Age <- to_predict_mice$Age
 to_predict$Fare <- to_predict_mice$Fare
 
-#¿é¤J¼Ò«¬¶i¦æ¹w´ú
+#è¼¸å…¥æ¨¡å‹é€²è¡Œé æ¸¬
 predicted <- predict(rf_clf, newdata = to_predict[, c("Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")])
 to_submit <- data.frame(to_predict[, "PassengerId"], predicted)
 names(to_submit) <- c("PassengerId", "Survived")
 
-#±N¹w´úµ²ªG¿é¥X¦ÜcsvÀÉ
+#å°‡é æ¸¬çµæœè¼¸å‡ºè‡³csvæª”
 write.csv(to_submit, file = "to_submit_cart.csv", row.names = FALSE)
 ```
 
